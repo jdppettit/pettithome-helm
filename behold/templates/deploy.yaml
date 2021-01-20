@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: behold-api
+  namespace: behold
+  labels:
+    app: behold-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: behold-api
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 2
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        app: behold-api
+    spec:
+      containers:
+        - name: behold-api
+          image: registry.pettitservers.com:5000/behold/behold:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 4040
+              name: http
+      imagePullSecrets:
+        - name: registry-secret
