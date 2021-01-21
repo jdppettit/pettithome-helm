@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zeus-server
+  namespace: zeus
+  labels:
+    app: zeus-server
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: zeus-server
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 2
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        app: zeus-server
+    spec:
+      containers:
+        - name: zeus-server
+          image: registry.pettitservers.com:5000/zeus-server/zeus-server:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8085
+              name: http
+      imagePullSecrets:
+        - name: registry-secret
