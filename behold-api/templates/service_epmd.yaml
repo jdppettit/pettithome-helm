@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: behold-api
+  namespace: behold
+spec:
+  selector:
+    app: behold-api
+  ports:
+    - port: 4369
+      name: epmd
