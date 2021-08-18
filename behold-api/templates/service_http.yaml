@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: behold-api
+  name: behold-api-releases-http
   namespace: behold
 spec:
   selector:
-    app: behold-api
+    app: behold-api-releases
   ports:
     - protocol: TCP
       port: 80

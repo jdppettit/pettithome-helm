@@ -1,15 +1,15 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: behold-api
+  name: behold-api-releases
   namespace: behold
   labels:
-    app: behold-api
+    app: behold-api-releases
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: behold-api
+      app: behold-api-releases
   strategy:
     type: RollingUpdate
     rollingUpdate:
@@ -18,10 +18,10 @@ spec:
   template:
     metadata:
       labels:
-        app: behold-api
+        app: behold-api-releases
     spec:
       containers:
-        - name: behold-api
+        - name: behold-api-releases
           image: registry.pettitservers.com:5000/behold-api/behold-api:latest
           imagePullPolicy: Always
           ports:
@@ -34,9 +34,9 @@ spec:
                   fieldPath: status.podIP
             - name: PORT
               value: "4040"
-      command: ["behold_api/bin/behold_api"]
-      args: [
-        "start"
-      ]
+          command: ["bin/behold_api"]
+          args: [
+            "start"
+          ]
       imagePullSecrets:
         - name: registry-secret
