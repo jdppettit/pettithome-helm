@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myplanespotter
+  namespace: myplanespotter
+  labels:
+    app: myplanespotter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: myplanespotter
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 2
+      maxUnavailable: 1
+  template:
+    metadata:
+      labels:
+        app: myplanespotter
+    spec:
+      containers:
+        - name: myplanespotter
+          image: registry.pettitservers.com:5000/myplanespotter/myplanespotter-app:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 4040
+              name: http
+      imagePullSecrets:
+        - name: regcred
